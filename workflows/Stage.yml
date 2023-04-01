@@ -1,6 +1,13 @@
 name: Stage Workflow
 
-on: [push]
+on:
+  push:
+    branches:
+      - stage
+  pull_request:
+    branches:
+      - stage
+  workflow_dispatch:
 
 jobs:
   console-log:
