@@ -1,0 +1,91 @@
+name: Stage Workflow
+
+on: [push]
+
+jobs:
+  console-log:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Console Log
+      run: echo "Hello, world!"
+
+# jobs:
+#   combine-and-push-image:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Combine images
+#         id: combine-images
+#         run: |
+#           # Get the image tags for each repository
+#           repo1_tags=$(curl -s "https://registry.hub.docker.com/v2/repositories/myorg/repo1/tags/?page_size=100" | jq -r '.results[].name')
+#           repo2_tags=$(curl -s "https://registry.hub.docker.com/v2/repositories/myorg/repo2/tags/?page_size=100" | jq -r '.results[].name')
+          
+#           # Combine the tags into a single tag for the combined image
+#           combined_tag="latest"
+#           if [ -n "$repo1_tags" ]; then
+#             combined_tag="${combined_tag}-repo1-${repo1_tags}"
+#           fi
+#           if [ -n "$repo2_tags" ]; then
+#             combined_tag="${combined_tag}-repo2-${repo2_tags}"
+#           fi
+#           echo "::set-output name=combined_tag::$combined_tag"
+      
+#       - name: Login to DockerHub
+#         uses: docker/login-action@v1
+#         with:
+#           username: ${{ secrets.DOCKERHUB_USERNAME }}
+#           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
+#       - name: Pull images
+#         run: |
+#           # Pull the images from DockerHub
+#           docker pull myorg/repo1
+#           docker pull myorg/repo2
+      
+#       - name: Combine images
+#         run: |
+#           # Create a new image with the combined contents of the repositories
+#           docker create --name combined myorg/repo1
+#           docker export combined | docker import - myorg/combined
+#           docker rm combined
+#           docker create --name combined myorg/repo2
+#           docker export combined | docker import - myorg/combined
+#           docker rm combined
+      
+#       - name: Tag and push combined image
+#         uses: docker/build-push-action@v2
+#         with:
+#           context: .
+#           push: true
+#           tags: myorg/combined:${{ steps.combine-images.outputs.combined_tag }}
+
+#   build-and-push-repo1:
+#     runs-on: ubuntu-latest
+#     if: github.repository == 'myorg/repo1'
+#     steps:
+#       - name: Checkout repo1
+#         uses: actions/checkout@v2
+#         with:
+#           repository: myorg/repo1
+#           ref: stage
+#       - name: Build and push repo1 image
+#         uses: docker/build-push-action@v2
+#         with:
+#           context: .
+#           push: true
+#           tags: myorg/repo1:stage
+#       - name: Trigger build-combined-image
+#         uses: peter-evans/repository-dispatch@v2
+#         with:
+#           token: ${{ secrets.PAT }}
+#           repository: myorg/combined
+#           event-type: build-combined-image
+
+#   build-and-push-repo2:
+#     runs-on: ubuntu-latest
+#     if: github.repository == 'myorg/repo2'
+#     steps:
+#       - name: Checkout repo2
+#         uses: actions/checkout@v2
+#         with:
+#           repository:
