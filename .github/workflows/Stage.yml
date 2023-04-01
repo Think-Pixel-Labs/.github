@@ -24,7 +24,7 @@ jobs:
       - name: See the files
         run: ls -la
       - name: Build DB Image
-        run: docker build -t new-rajshree-sweets-db .
+        run: docker build -t new-rajshree-sweets-db ./new-rajshree-sweets-db
   build-be-image:
     name: Build BE Task
     runs-on: ubuntu-latest
@@ -39,9 +39,9 @@ jobs:
       - name: See the files
         run: ls -la
       - name: Build DB Image
-        run: docker build -t new-rajshree-sweets-be .
+        run: docker build -t new-rajshree-sweets-be ./new-rajshree-sweets-be
   build-app-and-push-to-docker:
-        name: Build docker image and push to DockerHub
+        name: Build app image and push to DockerHub
         needs: [build-db-image, build-be-image]
         runs-on: ubuntu-latest
         steps:
