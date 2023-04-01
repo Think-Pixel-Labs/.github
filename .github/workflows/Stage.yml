@@ -38,7 +38,7 @@ jobs:
           ref: stage
       - name: See the files
         run: ls -la
-      - name: Build DB Image
+      - name: Build BE Image
         run: docker build -t new-rajshree-sweets-be ./new-rajshree-sweets-be
   build-app-and-push-to-docker:
         name: Build app image and push to DockerHub
