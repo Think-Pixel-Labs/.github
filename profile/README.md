@@ -1,4 +1,4 @@
-# New Rajshree Sweets Private Limited
+# Think Pixel Digital Media Solutions
 
 ## Best practices for commits and branch creation
 
