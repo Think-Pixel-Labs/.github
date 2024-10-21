@@ -1,4 +1,4 @@
-# Think Pixel Digital Media Solutions
+# Think Pixel Labs
 
 ## Best practices for commits and branch creation
 
